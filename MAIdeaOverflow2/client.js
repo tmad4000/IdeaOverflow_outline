@@ -91,7 +91,7 @@ function displayPosts() {
 			var progEntry=data[i].progress && data[i].progress != "null" ? data[i].progress + '% - ': "";
 			
 			status ="<td class='status'>" + '<a href="index.1.7_mitsuggestionbox_inProgress.php" rel="popover" data-content="'+progEntry +data[i].metric+'" data-original-title="'+statusTable[data[i].status]+'"><div class="status sc'+data[i].status +'" >'+ '</div></a>' + "</td>";
-			upvoter='<td class="votes"><span class="vote"> </span><span class="votes">2</span></td>';
+			upvoter='<td class="votes" -idea-id="'+data[i].pid+'"><span class="vote"> </span><span class="votes" >'+data[i].upvotes+'</span></td>';
             
 			table += '<tr>'+status + upvoter+'<td>' + nl2br(processIdea(data[i].body,data[i].pid)) + "</td>" + 
                // '<td><div class="progressbar"></div></td>' +
@@ -107,11 +107,24 @@ function displayPosts() {
         });*/
         displayIdeaNames();
 		
-		$('.votes').click(function() {$(this).children('.vote').toggleClass('on'); var num=2; if ($(this).children('.vote').hasClass('on')) num+=1;  $(this).children('span.votes').html(num) });
+		$('td.votes').click(function() {
+			$(this).children('.vote').toggleClass('on'); 
+			var num=$(this).children('span.votes').html()-0; 
+			if ($(this).children('.vote').hasClass('on')) {
+				num+=1;
+				doUpvote($(this).attr('-idea-id')-0,'up');
+			}
+			else {
+				num-=1;
+				doUpvote($(this).attr('-idea-id')-0,'down');
+			}
+			$(this).children('span.votes').html(num) 
+		});
 		
 	   $("[rel='popover']").popover({
 			trigger: "hover", 
-		  offset: 10
+		  offset: 10,
+		  html:true
 
 		});
     }
@@ -207,6 +220,16 @@ function replaceTags(idea) {
     
 }
 
+function doUpvote(ideaid,upOrDown) {
+
+	$.ajax({
+            'url': 'upvote.php?'+upOrDown+'=true',
+            'data': {'ideaid':ideaid},
+            'success': function(jsonData) {
+                 
+            },
+    });
+}
 
 function submitPostAndGetPosts() {
     $.ajax({

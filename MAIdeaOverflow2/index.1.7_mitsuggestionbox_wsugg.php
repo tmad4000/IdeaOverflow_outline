@@ -88,6 +88,22 @@ td.votes {
 
 /*popover */
 .idea {position: absolute; top: 100px; left: 100px;}
+
+form#postform {
+	padding-bottom:0;
+	margin-bottom:0;
+}
+
+div#relatedideas {
+	border: 1px #ccc solid;
+	margin-left: 20px;
+	margin-top: -21px;
+	margin-bottom: 20px;
+}
+
+a.addlink {
+margin-right:10px
+}
   </style>
   
 
@@ -98,7 +114,7 @@ td.votes {
     <!--        <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />-->
     
 <link href="style.css" rel="stylesheet">
-    <script type="text/javascript" src="client.js"></script>
+    <script type="text/javascript" src="client_wsugg.js"></script>
     
 <script type='text/javascript'>//<![CDATA[ 
 /*window.onload=function(){
@@ -197,7 +213,8 @@ td.votes {
           <input class="btn" type="submit"></input>
         </div>
       </form>
-      
+      <div id="relatedideas">
+</div>
       <div id="currentposts"></div>
       
       </div>

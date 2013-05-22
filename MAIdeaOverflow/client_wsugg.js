@@ -78,7 +78,7 @@ function nl2br(str) {
 function displayPosts() {
     if (localStorage.getItem("posts") !== null){
         var jsonData = localStorage.getItem("posts");
-        var data = $.parseJSON(jsonData);
+        var data = $.parseJSON(jsonData).allideas;
         var table = "<table class='table'>" // <tr> <th>Post Body</th>  <th></th>Progress Bar<th>User</th> <th>Time</th> </tr>";
 
 
@@ -130,10 +130,25 @@ function displayPosts() {
     }
 }
 
+function displaySugg() {
+    if (localStorage.getItem("posts") !== null){
+        var jsonData = localStorage.getItem("posts");
+        var data = $.parseJSON(jsonData).sugg;
+        var sugglist = "<ul class='sugg'>" // <tr> <th>Post Body</th>  <th></th>Progress Bar<th>User</th> <th>Time</th> </tr>";
+
+        for (var i = 0; i < data.length; i++) {
+			sugglist += '<li><span class="sugg">'+ nl2br(processIdea(data[i].body.substr(0,120),data[i].pid)) + "</span><a class='addlink pull-right' -idea-id='"+data[i].pid+"'>Add Link</a></li>";
+        }
+        
+        sugglist += "</ul>";
+        $("#relatedideas").html(sugglist);
+    }
+}
+
 function displayIdeaNames() {
     if (localStorage.getItem("posts") !== null){
         var jsonData = localStorage.getItem("posts");
-        var data = $.parseJSON(jsonData);
+        var data = $.parseJSON(jsonData).allideas;
 
         var nameul = $('ul#ideanames').empty();
         var tags={};
@@ -233,7 +248,7 @@ function doUpvote(ideaid,upOrDown) {
 
 function submitPostAndGetPosts() {
     $.ajax({
-            'url': 'get_or_make_post.php',
+            'url': 'get_or_make_post_wsugg.php',
             'data': {'mapid':$('#mapidform').val(), 'newpost': $('#newpost').val(),'ideatitle': extractIdeaName($('#newpost').val())},
             'success': function(jsonData) {
                  // todo: parse data and add into our table
@@ -246,10 +261,11 @@ function submitPostAndGetPosts() {
 
 function getPosts() {
     $.ajax({
-            'url': 'get_or_make_post.php',
+            'url': 'get_or_make_post_wsugg.php',
             'data': {'mapid':$('#mapidform').val(), 'newpost': ''},
             'success': function(jsonData) {
                  localStorage.setItem("posts", jsonData);
+                 displaySugg();
                  displayPosts();
             },
     });

@@ -16,7 +16,7 @@ if (!empty($body)) {
 	$tmptitle=mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars($_REQUEST['ideatitle']));
 	if(!$tmptitle)
 		$tmptitle=substr($body,0,80);
-    $query = "INSERT INTO $ideastbl VALUES ('', $time, '$tmptitle','$body', 0, NULL, '', 0,0,$mapid)";
+    $query = "INSERT INTO $ideastbl (`pid`, `time`, `title`, `body`, `status`, `progress`, `metric`, `uid`, `parent`, `mapid`) VALUES ('', $time, '$tmptitle','$body', 0, NULL, '', 0,0,$mapid)";
 //	print $query;
     $result = mysqli_query($MYSQLI_LINK, $query) or die("INSERT Error: " . mysqli_error($MYSQLI_LINK));
 }
@@ -26,7 +26,7 @@ $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_er
 
 $rows = array();
 while ($r = mysqli_fetch_assoc($result)) {
-    $rows []= $r;
+    $rows []= array_map(stripslashes,$r);
 }
 
 

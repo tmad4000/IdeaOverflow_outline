@@ -1,8 +1,6 @@
 <?php 
 require_once('mysql.php');
 
-include_once("analyticstracking.php");
-
 $getmapid=$_GET['mapid']+0;
 
 $query = "SELECT * FROM ideamaps WHERE mapid={$getmapid}";
@@ -22,7 +20,7 @@ $r = mysqli_fetch_assoc($result)
         <span class="icon-bar"></span>
       </a>
       
-      <a class="brand" href="index.1.7_mitsuggestionbox_ideamaps.php"><img src="" height="20" width="20"><!--<img src="http://www.dpcma.org/Portals/1/massachusetts-seal.gif" height="20" width="20">--> &nbsp; Outline <span style="color:#CCC;">&nbsp; <?= strpos($_SERVER['PHP_SELF'],"index.1.7_mitsuggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></span></a> 
+      <a class="brand" href="index.1.7_mitsuggestionbox_ideamaps.php"><img src="http://www.dpcma.org/Portals/1/massachusetts-seal.gif" height="20" width="20"> &nbsp; Outline <span style="color:#CCC;">&nbsp; <?= strpos($_SERVER['PHP_SELF'],"index.1.7_mitsuggestionbox_ideamaps.php") ? '' : $r['mapname'] ?></span></a> 
       <div class="nav-collapse">
         <ul class="nav">
 
@@ -33,9 +31,7 @@ $r = mysqli_fetch_assoc($result)
           <input type="hidden" value="<?= $getmapid ?>" id="mapidform" />
          
         </ul>
-        <p class="navbar-text pull-right"><a href="https://workflowy.com/shared/20888d4e-26e0-2c25-556a-24685029e818/">&nbsp;&nbsp;</a></p>
-<!--        <p class="navbar-text pull-right">Logged in as <a href="https://workflowy.com/shared/20888d4e-26e0-2c25-556a-24685029e818/">username</a></p>-->
-        <p class="navbar-text pull-right"><a href="http://ideaoverflowideplan.tk/" target="_blank">Grand Vision</a> &nbsp; &nbsp; &nbsp; &nbsp;</p>
+        <p class="navbar-text pull-right">Logged in as <a href="https://workflowy.com/shared/20888d4e-26e0-2c25-556a-24685029e818/">username</a></p>
       </div><!--/.nav-collapse -->
 
     </div>

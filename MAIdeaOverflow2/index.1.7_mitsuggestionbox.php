@@ -82,7 +82,8 @@ padding-bottom: 6px;
 td.votes {
 	font-size:14px;
 	color:#AAA;
-	text-align:center
+	text-align:center;
+	width:40px;
 }
 
 /*popover */
@@ -192,7 +193,7 @@ td.votes {
       
       <form id="postform">
         <div class="input-append" style="width:100%">
-          <textarea class="span12" placeholder="Enter your own cool project idea(s) here!" id="newpost" ></textarea>
+          <textarea class="span12" placeholder="Enter your own cool project idea, suggestion, goal for your group, or complaint here!" id="newpost" ></textarea>
           <input class="btn" type="submit"></input>
         </div>
       </form>

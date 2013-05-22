@@ -24,6 +24,6 @@ $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_er
 
 $rows = array();
 while ($r = mysqli_fetch_assoc($result)) {
-    $rows []= $r;
+    $rows []= array_map(stripslashes,$r);
 }
 print json_encode($rows);
