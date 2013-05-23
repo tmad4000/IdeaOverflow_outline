@@ -27,29 +27,93 @@ $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_er
 
 $rows = array();
 
-$data=array("pid"=>NULL,"children"=>array()); //root
+$activepath=array();
+
+$lastentry=array("body"=>"root",$children=>$array());
+
+$data=array("children"=>array());
+
+$parentsstack=array();
+
+$currparenti= NULL;
 
 while ($r = mysqli_fetch_assoc($result)) {
-	$rows[]=$r;
-	
 	
 	$entry=array_map(stripslashes,$r);
 	$entry["children"]=array();
+	
+	array_push($parentsstack, $entry);
+	
+	if($parentsstack[count($parentsstack)-1]['pid']==$entry['parent'])
+		$parentsstack[count($parentsstack)-1]["children"][]=$entry;
+	
+	
+	$rows []= $entry;
+	
+	function processEntry($entry) {
+		if($entry['parent']===NULL) {
+			array_push($parentsstack, $entry);
+		}
+		else {
+			while($parentsstack[count($parentsstack)-1]['pid']!==$entry['parent']) {
+				array_pop($parentsstack);
+			}
+			
+			$parentsstack[count($parentsstack)-1]["children"][]=$entry;
+			array_push($parentsstack, $entry);
+			
+			
+		}
+	}
+		
+		
+		if($currparent!==NULL && $entry['parent'] === $currparent['pid']) {
+		$currparent["children"][]=$entry;
+	}
+	}
+	
+
+	
+		
+		
+	$currparent=$entry;
+		
 		
 	$currpath=explode('/',$entry['path']);
 	
 	$pData= & $data['children'];
-	
-
-	foreach($currpath as $pid) {
-		if($pid!=='')
-			$pData= & $pData["pid".$pid]['children'];
+	foreach($currpath as $id) {
+		$pData= & $pData[$id]['children'];
 	}
-	$pData["pid".(string)$entry['pid']]=$entry;
+	$pData[$entry['pid']]=$entry;
 	
+	
+	
+	if($currpath)
+	
+	$lastentrypath=$rows[count($rows)-1]['path'];
+
+	$parentpath
+	
+	
+	
+	if($entry['path']===$parentpath)
+	
+	!=="" && $lastentrypath!= substr($entry['path'],0,strlen($lastentrypath))== )
+	
+    $rows []= array_map(stripslashes,$r);
+	
+	if($rows[count($rows)-1].path
+	/*
+	
+	body
+	
+	children
+	
+	*/
 }
 
 
 
 
-print json_encode(array("treePosts"=>$data,"flatPosts"=>$rows));
+print json_encode($rows);

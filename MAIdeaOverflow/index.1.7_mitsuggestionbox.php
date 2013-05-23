@@ -88,6 +88,61 @@ td.votes {
 
 /*popover */
 .idea {position: absolute; top: 100px; left: 100px;}
+
+td.ideaTxt {
+	/*width:100%;*/
+}
+
+
+
+ul.entryNode {
+	list-style-type: none;
+	padding-top:0
+	
+}
+
+ul.entrylist {
+	list-style-type: none;
+	padding-top:0
+	
+}
+
+ul.entryNode table{
+	padding-top:5px;		
+	margin-bottom:0;
+	
+}
+
+ul.entryNode td {
+	
+	
+}
+
+td.uid {
+	text-align:right;
+}
+
+#currentposts > ul.entrylist {
+
+	padding-left:0;
+	margin-left:0;
+	
+}
+#currentposts > ul.entryNode {
+
+	padding-left:0;
+	margin-left:0;
+	
+}
+#currentposts > ul.entryNode > li > ul.entrylist {
+
+	padding-left:0;
+	margin-left:0;
+	
+}
+
+
+
   </style>
   
 

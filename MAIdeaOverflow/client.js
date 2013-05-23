@@ -75,36 +75,95 @@ function nl2br(str) {
     return str.replace(/\n/g, '<br>');
 }
 
+
+
+function entryNodeToHTML(entryNode) {
+			
+			
+			//entryNodeBodyToHTML
+			//entryNodeChildrenToHTML
+		
+			var entryNodeBody="";
+			
+			if(entryNode.pid!=null) {
+				var table = "<table class='table'>" // <tr> <th>Post Body</th>  <th></th>Progress Bar<th>User</th> <th>Time</th> </tr>";    
+							entryNode;
+							var time = new Date(entryNode.time * 1000);
+							
+							
+														var time = new Date(entryNode.time * 1000);
+						
+									var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done"};
+									var progEntry=entryNode.progress && entryNode.progress != "null" ? entryNode.progress + '% - ': "";
+									
+									status ="<td class='status'>" + '<a href="index.1.7_mitsuggestionbox_inProgress.php" rel="popover" data-content="'+progEntry +entryNode.metric+'" data-original-title="'+statusTable[entryNode.status]+'"><div class="status sc'+entryNode.status +'" >'+ '</div></a>' + "</td>";
+									upvoter='<td class="votes" -idea-id="'+entryNode.pid+'"><span class="vote"> </span><span class="votes" >'+entryNode.upvotes+'</span></td>';
+									
+									table += '<tr>'+status + upvoter+'<td class="ideaTxt">' + nl2br(processIdea(entryNode.body,entryNode.pid)) + "</td>" + 
+									   // '<td><div class="progressbar"></div></td>' +
+										"<td class='uid'><a href='#' class='uid'>" + (entryNode.uid!=0 ? entryNode.uid : "anon") + "</a></td>" +
+										"<td class='timecol'>" + dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes()) +
+										"</td></tr>";
+									
+						table+="</table>";
+				
+				entryNodeBody=table;
+			}
+			
+			
+			
+			var entryNodeChildren="";
+				for(var key in entryNode.children) {
+					
+					entryNodeChildren+="<li>"+entryNodeToHTML(entryNode.children[key]) + "</li>\n";
+				}
+						
+			return "<ul class='entryNode'>" + 
+				"<li>" + entryNodeBody + "</li>" +
+				"<li>\n<ul class='entrylist'>" + entryNodeChildren + "</ul>\n</li>" +
+			"</ul>";
+			
+		}
+
 function displayPosts() {
     if (localStorage.getItem("posts") !== null){
         var jsonData = localStorage.getItem("posts");
-        var data = $.parseJSON(jsonData);
-        var table = "<table class='table'>" // <tr> <th>Post Body</th>  <th></th>Progress Bar<th>User</th> <th>Time</th> </tr>";
-
-
-        for (var i = 0; i < data.length; i++) {
-            
-
-            var time = new Date(data[i].time * 1000);
-
-			var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done"};
-			var progEntry=data[i].progress && data[i].progress != "null" ? data[i].progress + '% - ': "";
+        var data = $.parseJSON(jsonData)['treePosts'];
+		var entrylist=entryNodeToHTML(data);
+		
+		$("#currentposts").html(entrylist);
+		/*
+						var table = "<table class='table'>" // <tr> <th>Post Body</th>  <th></th>Progress Bar<th>User</th> <th>Time</th> </tr>";
+				
+				
+						for (var i = 0; i < data.length; i++) {
+							
+				
+							var time = new Date(data[i].time * 1000);
+				
+							var statusTable={0:"Not acknowledged",1:"Acknowledged",2:"In Progress", 3:"Done"};
+							var progEntry=data[i].progress && data[i].progress != "null" ? data[i].progress + '% - ': "";
+							
+							status ="<td class='status'>" + '<a href="index.1.7_mitsuggestionbox_inProgress.php" rel="popover" data-content="'+progEntry +data[i].metric+'" data-original-title="'+statusTable[data[i].status]+'"><div class="status sc'+data[i].status +'" >'+ '</div></a>' + "</td>";
+							upvoter='<td class="votes" -idea-id="'+data[i].pid+'"><span class="vote"> </span><span class="votes" >'+data[i].upvotes+'</span></td>';
+							
+							table += '<tr>'+status + upvoter+'<td>' + nl2br(processIdea(data[i].body,data[i].pid)) + "</td>" + 
+							   // '<td><div class="progressbar"></div></td>' +
+								"<td><a href='#' class='uid'>" + (data[i].uid!=0 ? data[i].uid : "anon") + "</a></td>" +
+								"<td class='timecol'>" + dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes()) +
+								"</td></tr>";
+						}
+						
+						table += "</table>";
+						$("#currentposts").html(table);
+						
+						//$( ".progressbar" ).progressbar({
+					//		value: 59
+						//});
+						*/
 			
-			status ="<td class='status'>" + '<a href="index.1.7_mitsuggestionbox_inProgress.php" rel="popover" data-content="'+progEntry +data[i].metric+'" data-original-title="'+statusTable[data[i].status]+'"><div class="status sc'+data[i].status +'" >'+ '</div></a>' + "</td>";
-			upvoter='<td class="votes" -idea-id="'+data[i].pid+'"><span class="vote"> </span><span class="votes" >'+data[i].upvotes+'</span></td>';
-            
-			table += '<tr>'+status + upvoter+'<td>' + nl2br(processIdea(data[i].body,data[i].pid)) + "</td>" + 
-               // '<td><div class="progressbar"></div></td>' +
-                "<td><a href='#' class='uid'>" + (data[i].uid!=0 ? data[i].uid : "anon") + "</a></td>" +
-                "<td class='timecol'>" + dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes()) +
-                "</td></tr>";
-        }
-        
-        table += "</table>";
-        $("#currentposts").html(table);
-        /*$( ".progressbar" ).progressbar({
-            value: 59
-        });*/
+			
+			
         displayIdeaNames();
 		
 		$('td.votes').click(function() {
@@ -133,7 +192,7 @@ function displayPosts() {
 function displayIdeaNames() {
     if (localStorage.getItem("posts") !== null){
         var jsonData = localStorage.getItem("posts");
-        var data = $.parseJSON(jsonData);
+        var data = $.parseJSON(jsonData)['flatPosts'];
 
         var nameul = $('ul#ideanames').empty();
         var tags={};
@@ -238,6 +297,7 @@ function submitPostAndGetPosts() {
             'success': function(jsonData) {
                  // todo: parse data and add into our table
                 localStorage.setItem("posts", jsonData);
+				
                 $('#newpost').val('');
                 displayPosts();
             },
