@@ -19,7 +19,7 @@ if (!empty($body)) {
 	$tmptitle=mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars($_REQUEST['ideatitle']));
 	if(!$tmptitle)
 		$tmptitle=substr($body,0,80);
-    $query = "INSERT INTO $ideastbl (`pid`, `time`, `title`, `body`, `status`, `progress`, `metric`, `uid`, `parent`, `mapid`,'path') VALUES ('', $time, '$tmptitle','$body', 0, NULL, '', 0,0,$mapid,$path)";
+    $query = "INSERT INTO $ideastbl (`pid`, `time`, `title`, `body`, `status`, `progress`, `metric`, `uid`, `parent`, `mapid`,`path`) VALUES ('', $time, '$tmptitle','$body', 0, NULL, '', 0,0,$mapid,'$path')";
 //	print $query;
     $result = mysqli_query($MYSQLI_LINK, $query) or die("INSERT Error: " . mysqli_error($MYSQLI_LINK));
 }

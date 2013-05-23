@@ -51,6 +51,8 @@ $(document).ready(function() {
 	$('#myTab a:last').tab('show');
 */
 	getPosts();
+	
+	
 
 });
 
@@ -76,6 +78,77 @@ function nl2br(str) {
 }
 
 
+function makeCollapsibleTree2() {
+	$("li.entryBody").click(function() {
+		
+		/*
+		var entryChildrenLi=$(this).parent().children('li.entryChildren');
+		
+		if(entryChildrenLi.children('ul.entrylist').children('li').length > 0 && !entryChildrenLi.is(":visible"))
+		
+			entryChildrenLi.parent().addClass('hasUnexpandedChildren');
+		else
+			entryChildrenLi.parent().removeClass('hasUnexpandedChildren');*/	
+		$(this).parent().children('li.entryChildren').slideToggle('fast', function () {
+			//console.log($(this).children('ul'));
+			
+			if($(this).children('ul.entrylist').children('li').length > 0 && !$(this).is(":visible"))
+			
+				$(this).parent().addClass('hasUnexpandedChildren');
+			else
+				$(this).parent().removeClass('hasUnexpandedChildren');
+		});
+	});	
+	$('li.entryChildren li.entryChildren').hide();
+}
+
+function makeCollapsibleTree() {
+
+		// Find list items representing folders and
+		// style them accordingly.  Also, turn them
+		// into links that can expand/collapse the
+		// tree leaf.
+		$('#currentposts li > ul').each(function(i) {
+			// Find this list's parent list item.
+			var parent_li = $(this).parent('li');
+	
+			// Style the list item as folder.
+			parent_li.addClass('folder');
+	
+			// Temporarily remove the list from the
+			// parent list item, wrap the remaining
+			// text in an anchor, then reattach it.
+			var sub_ul = $(this).remove();
+			parent_li.wrapInner('<a/>').find('a').click(function() {
+				// Make the anchor toggle the leaf display.
+				sub_ul.toggle();
+			});
+			parent_li.append(sub_ul);
+		});
+	
+		// Hide all lists except the outermost.
+		//$('ul ul').hide();
+
+
+    // Find list items representing folders and turn them
+    // into links that can expand/collapse the tree leaf.
+    $('#currentposts li.folder').each(function(i) {
+        // Temporarily decouple the child list, wrap the
+        // remaining text in an anchor, then reattach it.
+        var sub_ul = $(this).children().remove();
+        $(this).wrapInner('<a/>').find('a').click(function() {
+            // Make the anchor toggle the leaf display.
+            sub_ul.toggle();
+        });
+        $(this).append(sub_ul);
+    });
+
+    // Hide all lists except the outermost.
+    $('ul ul').hide();
+	
+	//http://homework.nwsnet.de/releases/ea21/#turn-nested-lists-into-a-collapsible-tree-with-jquery
+
+}
 
 function entryNodeToHTML(entryNode) {
 			
@@ -123,8 +196,8 @@ function entryNodeToHTML(entryNode) {
 				}
 						
 			return "<ul class='entryNode'>" + 
-				"<li>" + entryNodeBody + "</li>" +
-				"<li>\n<ul class='entrylist'>" + entryNodeChildren + "</ul>\n</li>" +
+				"<li class='entryBody'>" + entryNodeBody + "</li>" +
+				"<li class='entryChildren'>\n<ul class='entrylist'>" + entryNodeChildren + "</ul>\n</li>" +
 			"</ul>";
 			
 		}
@@ -190,6 +263,10 @@ function displayPosts() {
 		  html:true
 
 		});
+		
+		
+		//makeCollapsibleTree();
+		makeCollapsibleTree2();
     }
 }
 

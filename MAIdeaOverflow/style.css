@@ -71,3 +71,33 @@ td.status {
 	border-radius: 4px;
 	
 }
+
+.hasUnexpandedChildren {
+	background-color:#f9f9f9;
+}
+
+/*
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+li {
+    background-image: url(page.png);
+    background-position: 0 1px;
+    background-repeat: no-repeat;
+    padding-left: 20px;
+}
+li.folder {
+    background-image: url(folder.png);
+}
+
+a {
+    color: #000000;
+    cursor: pointer;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}*/
