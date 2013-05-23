@@ -13,6 +13,8 @@ $time = time();
 
 $ideastbl = IDEAS_TBL;
 
+
+
 if (!empty($body)) {
 	$tmptitle=mysqli_real_escape_string($MYSQLI_LINK, htmlspecialchars($_REQUEST['ideatitle']));
 	if(!$tmptitle)
@@ -22,7 +24,15 @@ if (!empty($body)) {
     $result = mysqli_query($MYSQLI_LINK, $query) or die("INSERT Error: " . mysqli_error($MYSQLI_LINK));
 }
 
-$query = "SELECT * FROM $ideastbl WHERE mapid=$mapid ORDER BY path ASC,time DESC";
+
+//return progress bars info if queried
+if($_GET['inProgress']) {
+	$query = "SELECT * FROM $ideastbl WHERE mapid=$mapid AND status > 0 ORDER BY path ASC,time DESC";
+}
+//normally, return suggestions info
+else {
+	$query = "SELECT * FROM $ideastbl WHERE mapid=$mapid ORDER BY path ASC,time DESC";
+}
 $result = mysqli_query($MYSQLI_LINK, $query) or die("SELECT Error: " . mysqli_error($MYSQLI_LINK));
 
 $rows = array();
