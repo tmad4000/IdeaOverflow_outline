@@ -99,17 +99,32 @@ function entryNodeToHTML(entryNode) {
 									status ="<td class='status'>" + '<a href="index.1.7_mitsuggestionbox_inProgress.php" rel="popover" data-content="'+progEntry +entryNode.metric+'" data-original-title="'+statusTable[entryNode.status]+'"><div class="status sc'+entryNode.status +'" >'+ '</div></a>' + "</td>";
 									upvoter='<td class="votes" -idea-id="'+entryNode.pid+'"><span class="vote"> </span><span class="votes" >'+entryNode.upvotes+'</span></td>';
 									
-									table += '<tr>'+status + upvoter+'<td class="ideaTxt">' + nl2br(processIdea(entryNode.body,entryNode.pid)) + "</td>" + 
+									
+				//entryNodeBody="<div>"+table+"</div>";
+				comments=""
+				/*
+				comments="<div class='showcomments'><a href='#' class='showcomments'>7+ Comments</a>";
+				
+				comments+='<div class="commentform"> \
+						<div class="commentsinput" contenteditable="true" placeholder="" -idea-id="'+entryNode.pid+'"></div> \
+						<input class="btn" type="button" value="Comment"> \
+					</div>';
+				comments+='</div>';
+				*/
+				
+				//entryNodeBody+=comments;
+				
+				
+									table += '<tr>'+status + upvoter+'<td class="ideaTxt">' + nl2br(processIdea(entryNode.body,entryNode.pid)) + "<br />"+comments+"</td>" + 
 									   // '<td><div class="progressbar"></div></td>' +
 										"<td class='uid'><a href='#' class='uid'>" + (entryNode.uid!=0 ? entryNode.uid : "anon") + "</a></td>" +
 										"<td class='timecol'>" + dateToString(time.getMonth(), time.getDate()) + ", " + timeToString(time.getHours(), time.getMinutes()) +
 										"</td></tr>";
 									
 						table+="</table>";
-				
-				entryNodeBody=table;
-			}
 			
+				entryNodeBody="<div>"+table+"</div>";	
+			}
 			
 			
 			var entryNodeChildren="";

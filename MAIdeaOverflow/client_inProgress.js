@@ -99,7 +99,6 @@ function makeCollapsibleTree2() {
 				$(this).parent().removeClass('hasUnexpandedChildren');
 		});
 	});	
-	$('li.entryChildren li.entryChildren').hide();
 }
 
 function makeCollapsibleTree() {
@@ -194,7 +193,7 @@ function entryNodeToHTML(entryNode) {
 					
 					entryNodeChildren+="<li>"+entryNodeToHTML(entryNode.children[key]) + "</li>\n";
 				}
-						
+			
 			return "<ul class='entryNode'>" + 
 				"<li class='entryBody'>" + entryNodeBody + "</li>" +
 				"<li class='entryChildren'>\n<ul class='entrylist'>" + entryNodeChildren + "</ul>\n</li>" +
